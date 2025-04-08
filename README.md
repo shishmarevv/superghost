@@ -1,4 +1,4 @@
-#Super Ghost game
+# Super Ghost game
 
 ![Ghost Game Banner](assets/banner.png)
 
@@ -39,6 +39,7 @@ This project aims to explore:
 ## License
 
 This project is licensed under the MIT License.
+
 Copyright (c) 2025 Viktor Shishmarev
 
 ---
@@ -46,5 +47,7 @@ Copyright (c) 2025 Viktor Shishmarev
 ## Contact
 
 Author: Viktor Shishmarev
+
 Github: @shishmarevv
+
 LinkedIn: [shishmarevv](https://www.linkedin.com/in/shishmarevv/) 
