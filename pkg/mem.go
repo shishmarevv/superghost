@@ -1,14 +1,13 @@
-package mem
+package superghost
 
 import (
 	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
-	"superghost/pkg/structs"
 )
 
 func Open() *sql.DB {
-	db, err := sql.Open("sqlite3", "./mem.db")
+	db, err := sql.Open("sqlite3", "superghost/memory/mem.db")
 	checkErr(err)
 
 	log.Println("Database opened")
@@ -61,7 +60,25 @@ func IsInWord(db *sql.DB, include string) bool {
 	return false
 }
 
-func AddSequence(db *sql.DB, sequence structs.Sequence) {
+func IsWord(db *sql.DB, word string) bool {
+	CheckDB(db)
+
+	rows, err := db.Query(`
+		SELECT word 
+		FROM words 
+		WHERE word == ?
+		`, word)
+	checkErr(err)
+
+	defer rows.Close()
+
+	if rows.Next() {
+		return true
+	}
+	return false
+}
+
+func AddSequence(db *sql.DB, sequence Sequence) {
 	CheckDB(db)
 
 	_, err := db.Exec(`
@@ -71,10 +88,4 @@ func AddSequence(db *sql.DB, sequence structs.Sequence) {
 		`, sequence.Text, sequence.Weight)
 	checkErr(err)
 	log.Println("Added sequence:", sequence.Text)
-}
-
-func checkErr(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
 }
