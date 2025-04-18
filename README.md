@@ -2,7 +2,7 @@
 
 ![Ghost Game Banner](assets/banner.png)
 
-A fun and challenging take on the classic word game **Ghost** implemented in Go. This project includes a modern GUI, a fully responsive web interface, and an AI opponent powered by reinforcement learning, making it an innovative twist on a timeless game.
+A fun and challenging take on the classic word game **Ghost** implemented in Go. This project includes a modern GUI, a fully responsive web interface, and an AI opponent, making it an innovative twist on a timeless game.
 
 ---
 
@@ -10,6 +10,7 @@ A fun and challenging take on the classic word game **Ghost** implemented in Go.
 - [About](#about)
 - [Features](#features)
 - [License](#license)
+- [Credit](#credit)
 - [Contact](#contact)
 
 ---
@@ -30,8 +31,8 @@ This project aims to explore:
 - **Classic Gameplay with a Twist**: Based on the traditional rules of Ghost.
 - **Graphical User Interface**: Intuitive and responsive desktop application.
 - **Web Interface**: Play on the web with your browser.
-- **Reinforcement Learning AI**: A smart opponent that evolves strategies over time.
-- **Multiplatform Support**: Easily run on Windows, macOS, and Linux.
+- **Learning**: A smart opponent that evolves strategies over time.
+- **Multiplatform Support**: Easily run on Windows, macOS, Linux and in Web browser.
 - **Extensible Game Modes**: Plans to support variants like Superghost, Superduperghost, and Xghost.
 
 ---
@@ -45,7 +46,7 @@ Copyright (c) 2025 Viktor Shishmarev
 ---
 
 ## Credit
-- [10000 most popular English words] (https://github.com/first20hours/google-10000-english)
+- [10000 most popular English words](https://github.com/first20hours/google-10000-english)
 
 ---
 
@@ -53,6 +54,6 @@ Copyright (c) 2025 Viktor Shishmarev
 
 Author: Viktor Shishmarev
 
-Github: [@shishmarevv] (https://github.com/shishmarevv)
+Github: [@shishmarevv](https://github.com/shishmarevv)
 
 LinkedIn: [shishmarevv](https://www.linkedin.com/in/shishmarevv/) 
