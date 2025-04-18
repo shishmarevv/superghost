@@ -44,10 +44,15 @@ Copyright (c) 2025 Viktor Shishmarev
 
 ---
 
+## Credit
+- [10000 most popular English words] (https://github.com/first20hours/google-10000-english)
+
+---
+
 ## Contact
 
 Author: Viktor Shishmarev
 
-Github: @shishmarevv
+Github: [@shishmarevv] (https://github.com/shishmarevv)
 
 LinkedIn: [shishmarevv](https://www.linkedin.com/in/shishmarevv/) 
