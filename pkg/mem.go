@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func Open() *sql.DB {
@@ -39,7 +40,7 @@ func AddWord(db *sql.DB, word string) {
 	_, err := db.Exec(`
 		INSERT INTO words(word) 
 		VALUES(?)
-		`, word)
+		`, strings.ToLower(word))
 	CheckErr(err)
 
 	log.Println("Added word:", word)
@@ -70,7 +71,7 @@ func IsWord(db *sql.DB, word string) bool {
 	rows, err := db.Query(`
 		SELECT word 
 		FROM words 
-		WHERE word == ?
+		WHERE word LIKE ?
 		`, word)
 	CheckErr(err)
 
@@ -89,7 +90,7 @@ func AddSequence(db *sql.DB, sequence Sequence) {
 		INSERT INTO weights(sequence, weight) 
 		VALUES(?, ?)
 		ON CONFLICT (sequence) DO UPDATE SET weight = excluded.weight
-		`, sequence.Text, sequence.Weight)
+		`, strings.ToLower(sequence.Text), sequence.Weight)
 	CheckErr(err)
 	log.Println("Added sequence:", sequence.Text)
 }

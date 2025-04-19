@@ -2,11 +2,13 @@ package superghost
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"os"
 	"strings"
+	"unicode"
 )
 
 func (s *Sequence) Update() {
@@ -17,7 +19,7 @@ func (s *Sequence) Update() {
 	rows, err := db.Query(`
 		SELECT weight
 		FROM weights
-		WHERE sequence = ?
+		WHERE sequence LIKE ?
 		`, s.Text)
 	CheckErr(err)
 	defer rows.Close()
@@ -31,7 +33,6 @@ func (s *Sequence) Update() {
 		s.Weight = 1.0
 		AddSequence(db, *s)
 	}
-
 }
 
 func (s *Sequence) Add(symbol string, direction bool) {
@@ -75,30 +76,53 @@ func NewCMDinput() *CMDinput {
 	}
 }
 
-func (c *CMDinput) GetSymbol() string {
+func NewCMDoutput() *CMDoutput {
+	return &CMDoutput{
+		writer: bufio.NewWriter(os.Stdout),
+	}
+}
+
+func (c *CMDinput) GetSymbol() (string, error) {
 	fmt.Println("Letter:")
 	input, err := c.reader.ReadString('\n')
 	CheckErr(err)
 
-	symbol := strings.TrimSpace(input)
-	if len(symbol) == 0 {
-		return ""
+	input = strings.TrimSpace(input)
+	if len(input) != 1 {
+		return "", errors.New("wrong symbol length")
+	} else if !unicode.IsLetter(rune(input[0])) {
+		return "", errors.New("invalid symbol")
 	}
-
-	return symbol[:1]
+	return strings.ToLower(input), nil
 }
 
-func (c *CMDinput) GetDirection() bool {
+func (c *CMDinput) GetDirection() (bool, error) {
 	fmt.Println("Direction:")
 	input, err := c.reader.ReadString('\n')
 	CheckErr(err)
 
 	input = strings.TrimSpace(input)
 	if input == "left" {
-		return true
+		return true, nil
 	} else if input == "right" {
-		return false
+		return false, nil
 	}
-	log.Fatal("Not a direction")
-	return nil
+	return false, errors.New("not a direction")
+}
+
+func (c *CMDoutput) Out(message string) {
+	_, err := c.writer.WriteString("Current sequence:" + message)
+	CheckErr(err)
+	err = c.writer.Flush()
+	CheckErr(err)
+}
+
+func (c *CMDoutput) Winner(game *Game) {
+	if !game.Turn {
+		_, err := c.writer.WriteString("First player won")
+		CheckErr(err)
+	} else {
+		_, err := c.writer.WriteString("Second player won")
+		CheckErr(err)
+	}
 }

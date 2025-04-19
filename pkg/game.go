@@ -1,7 +1,6 @@
 package superghost
 
 import (
-	"fmt"
 	"log"
 )
 
@@ -11,7 +10,7 @@ func CheckErr(err error) {
 	}
 }
 
-func Player_versus_player(InputProvider Input) {
+func Player_versus_player(InputProvider Input, OutputProvider Output) {
 	log.Println("Player versus player")
 
 	var game = NewGame(InputProvider)
@@ -22,11 +21,25 @@ func Player_versus_player(InputProvider Input) {
 	buffer.Weight = 1.0
 
 	for game.On {
-
-		symbol := game.Source.GetSymbol()
-
-		if symbol == "" {
+		if game.Turn {
+			log.Println("First player")
+		} else {
+			log.Println("Second player")
+		}
+		direction, err := game.Source.GetDirection()
+		if err != nil {
+			log.Println(err)
 			continue
 		}
+		symbol, err := game.Source.GetSymbol()
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+		buffer.Add(symbol, direction)
+		buffer.Update()
+		game.Update(buffer)
+		OutputProvider.Out(buffer.Text)
 	}
+	OutputProvider.Winner(game)
 }

@@ -15,9 +15,19 @@ type Game struct {
 }
 
 type Input interface {
-	GetSymbol() string
+	GetSymbol() (string, error)
+	GetDirection() (bool, error)
 }
 
 type CMDinput struct {
 	reader *bufio.Reader
+}
+
+type Output interface {
+	Out(string)
+	Winner(*Game)
+}
+
+type CMDoutput struct {
+	writer *bufio.Writer
 }
